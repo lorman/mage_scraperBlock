@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<config>
+	<!-- We are defining a new menu item for the admin panel. -->
+	<menu>
+		<suppliers>
+			<children>
+				<!-- First, create a top-level menu item, which will appear alongside
+					CMS -->
+				<hubco_scraperblock translate="title" module="hubco_scraperblock">
+					<title>Scraper Block</title>
+					<sort_order>2</sort_order>
+
+						<module>HubCo_ScraperBlock</module>
+					  <action>hubco_scraperblock_admin/block</action>
+
+				</hubco_scraperblock>
+			</children>
+		</suppliers>
+	</menu>
+
+	<!-- Define ACL for access to these menu items. -->
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<hubco_scraperblock translate="title" module="hubco_scraperblock">
+						<title>Scraper Block</title>
+						<sort_order>2</sort_order>
+						<children>
+							<block translate="title" module="hubco_scraperblock">
+								<title>Manage Scraper Blcok</title>
+							</block>
+						</children>
+					</hubco_scraperblock>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

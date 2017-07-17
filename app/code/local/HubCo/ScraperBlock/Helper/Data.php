@@ -1,0 +1,7 @@
+<?php
+class HubCo_ScraperBlock_Helper_Data
+    extends Mage_Core_Helper_Abstract
+{
+
+
+}

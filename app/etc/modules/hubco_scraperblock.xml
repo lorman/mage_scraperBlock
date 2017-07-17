@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <HubCo_ScraperBlock>
+            <active>true</active>
+            <codePool>local</codePool>
+        </HubCo_ScraperBlock>
+    </modules>
+</config>
