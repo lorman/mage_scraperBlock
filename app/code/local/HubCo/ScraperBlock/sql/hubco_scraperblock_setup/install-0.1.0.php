@@ -48,6 +48,22 @@ if (!$this->getConnection ()->isTableExists ( $this->getTable ( 'hubco_scraperbl
   $this->getConnection()->createTable($table);
 }
 
+// add index
+$tableName = $this->getTable('hubco_scraperblock/access');
+if ($this->getConnection ()->isTableExists ( $tableName )) {
+  $table = $this->getConnection ();
+  $table->addIndex ( $this->getTable ( 'hubco_scraperblock/block' ), $this->getIdxName ( 'hubco_scraperblock/block', array (
+      'ipAddr'
+  ), Varien_Db_Adapter_Interface::INDEX_TYPE_UNIQUE ), array (
+      'ipAddr'
+  ), Varien_Db_Adapter_Interface::INDEX_TYPE_UNIQUE );
+  $table->addIndex ( $this->getTable ( 'hubco_scraperblock/block' ), $this->getIdxName ( 'hubco_scraperblock/block', array (
+      'accessTime'
+  ), Varien_Db_Adapter_Interface::INDEX_TYPE_INDEX ), array (
+      'accessTime'
+  ), Varien_Db_Adapter_Interface::INDEX_TYPE_INDEX );
+}
+
 $table = new Varien_Db_Ddl_Table ();
 $table->setName ( $this->getTable ( 'hubco_scraperblock/block' ) );
 $table->addColumn ( 'blockID', Varien_Db_Ddl_Table::TYPE_INTEGER, 32, array (
@@ -86,5 +102,6 @@ if ($this->getConnection ()->isTableExists ( $tableName )) {
   ), Varien_Db_Adapter_Interface::INDEX_TYPE_UNIQUE ), array (
       'ipAddr'
   ), Varien_Db_Adapter_Interface::INDEX_TYPE_UNIQUE );
+}
 
 $this->endSetup ();
