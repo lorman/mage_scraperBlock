@@ -32,6 +32,7 @@ class HubCo_ScraperBlock_Model_Block
   }
 
   public function scraperCheck($observer) {
+    //return;
     if(HubCo_ScraperBlock_Model_Block::$_hasRun)
     {
       // only run once per session
@@ -62,6 +63,9 @@ class HubCo_ScraperBlock_Model_Block
     $ipAddr = filter_var($_SERVER['REMOTE_ADDR'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);
     $userAgent = $_SERVER['HTTP_USER_AGENT'];
     $userCleaned = addslashes($userAgent);
+    if (empty($ipAddr)) {
+      return;
+    }
 
     // Unblock if Captcha passed
     if ($captcha) {
@@ -74,7 +78,7 @@ class HubCo_ScraperBlock_Model_Block
 
     // check if the IP should be blocked
     // don't process any google/msn/bingbot access
-    if (strstr(strtolower($userAgent), 'msnbot') === false || strstr(strtolower($userAgent), 'bingbot') === false || strstr(strtolower($userAgent), 'google') === false) {
+    if (strstr(strtolower($userAgent), 'msnbot') === false && strstr(strtolower($userAgent), 'bingbot') === false && strstr(strtolower($userAgent), 'google') === false) {
       $query = "SELECT A.ipAddr, count(*) as cnt, MAX(A.accessTime), A.userAgent
       FROM $accessTable A
       LEFT JOIN $blockTable B ON A.ipAddr = B.ipAddr
@@ -107,6 +111,13 @@ class HubCo_ScraperBlock_Model_Block
       <input name="reset" type="submit" value="Keep Browsing"/>
       </form>';
       echo $message;
+
+      // disconnect from MYSQL
+      foreach (Mage::getSingleton('core/resource')->getConnections() as $name => $connection) {
+        if ($connection instanceof Zend_Db_Adapter_Abstract) {
+            $connection->closeConnection();
+        }
+      }
       exit;
     }
 
