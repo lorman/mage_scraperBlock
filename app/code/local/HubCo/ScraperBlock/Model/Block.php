@@ -78,7 +78,7 @@ class HubCo_ScraperBlock_Model_Block
 
     // check if the IP should be blocked
     // don't process any google/msn/bingbot access
-    if (strstr(strtolower($userAgent), 'msnbot') === false && strstr(strtolower($userAgent), 'bingbot') === false && strstr(strtolower($userAgent), 'google') === false) {
+    if (strstr(strtolower($userAgent), 'msnbot') === false && strstr(strtolower($userAgent), 'bingbot') === false && strstr(strtolower($userAgent), 'google') === false && strstr(strtolower($userAgent), 'shipstation') === false) {
       $query = "SELECT A.ipAddr, count(*) as cnt, MAX(A.accessTime), A.userAgent
       FROM $accessTable A
       LEFT JOIN $blockTable B ON A.ipAddr = B.ipAddr
